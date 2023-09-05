@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\product_list;
 use App\Models\order_list;
 use App\Models\User;
+use App\Models\cart;
 
 
 class otherController extends Controller
@@ -142,7 +143,19 @@ class otherController extends Controller
     //     return redirect()->back();
     // }
 
-    public function loading() {
-        return view('web.loading');
+    public function loading(Request $req) {
+
+        $phone = $req->phone;
+        $Newphone = ltrim($phone,'0');
+        $tzcode = 255;
+        $Newphone =$tzcode.$Newphone;
+
+        $pay = new cart();
+        $pay->phone = $Newphone;
+        $pay->amount = $req->amount;
+
+        return $pay;
+
+        // return view('web.loading');
     }
 }
